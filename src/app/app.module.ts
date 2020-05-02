@@ -6,6 +6,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ExampleComponent } from './components/example/example.component';
 
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { LoadingBarHttpModule } from '@ngx-loading-bar/http';
+import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+
 // services
 import { GoogleAnalyticsEventsService } from './services/GoogleAnalyticsEvents/GoogleAnalyticsEvents.service';
 import { ExampleService } from './services/example/example.service';
@@ -18,7 +22,10 @@ import { ExampleService } from './services/example/example.service';
 	imports: [
 		BrowserModule,
 		HttpClientModule,
-		AppRoutingModule
+		AppRoutingModule,
+		LoadingBarHttpClientModule,
+		LoadingBarHttpModule,
+		LoadingBarRouterModule,
 	],
 	providers: [
 		GoogleAnalyticsEventsService,
