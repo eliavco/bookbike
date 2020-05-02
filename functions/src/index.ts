@@ -15,7 +15,11 @@ const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 
 //initialize firebase inorder to access its services
-admin.initializeApp(functions.config().firebase);
+const serviceAccount = require('./serviceAccount.json');
+const adminConfig = JSON.parse(process.env.FIREBASE_CONFIG!);
+adminConfig.credential = admin.credential.cert(serviceAccount);
+// admin.initializeApp(functions.config().firebase);
+admin.initializeApp(adminConfig);
 
 //initialize express server
 const app = express();
