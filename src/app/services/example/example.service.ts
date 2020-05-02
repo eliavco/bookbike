@@ -12,7 +12,7 @@ export class ExampleService {
 	constructor(private httpClient: HttpClient) { }
 
 	getInfo() {
-		return this.httpClient.get(backendUrl + '/helloWorld', { responseType: 'text' });
+		return this.httpClient.get(backendUrl + '/webApi/api/v1/try');
 	}
 
 }
