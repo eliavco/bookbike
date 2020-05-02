@@ -21,8 +21,8 @@ export class ExampleComponent implements OnInit {
 
 	ngOnInit() {
 		this.titleService.setTitle(this.titleService.getTitle() + ' | Exmaple');
-		this.exampleService.getInfo().subscribe(info => {
-			this.info = info;
+		this.exampleService.getInfo().subscribe((info: any) => {
+			this.info = info.status;
 			console.log(info);
 		});
 	}

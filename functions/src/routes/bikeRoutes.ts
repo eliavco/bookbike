@@ -9,6 +9,7 @@ const router = express.Router();
 
 router
 	.route('/')
-	.get(bikeController.getAllBikes);
+	.get(bikeController.getAllBikes)
+	.post(bikeController.createBike);
 
 module.exports = router;
