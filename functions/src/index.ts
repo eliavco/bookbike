@@ -34,6 +34,7 @@ main.use(async (req: any, res, next) => {
 		req.db = undefined;
 		req.st = undefined;
 		req.dbm = undefined;
+		req.makeQuery = undefined;
 		return tres;
 	};
 	next();
@@ -55,7 +56,7 @@ main.use((req: any, res, next) => {
 	req.requestTime = new Date().toISOString();
 	req.db = db;
 	req.st = bucket;
-	req.dbm = dbm
+	req.dbm = dbm;
 	next();
 });
 
@@ -78,7 +79,7 @@ main.use(limiter);
 main.use(helmet.xssFilter());
 main.use(
 	hpp({
-		whitelist: []
+		whitelist: ['order']
 	})
 );
 main.use(compression());

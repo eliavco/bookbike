@@ -9,7 +9,13 @@ const router = express.Router();
 
 router
 	.route('/')
-	.get(bikeController.getAllBikes)
+	.get(bikeController.makeQueries, bikeController.getAllBikes)
 	.post(bikeController.createBike);
+
+router
+	.route('/:id')
+	.get(bikeController.getBike)
+	.put(bikeController.updateBike)
+	.delete(bikeController.deleteBike);
 
 module.exports = router;
