@@ -1,3 +1,5 @@
+const uniqid = require('uniqid');
+
 const catchAsync = require('./../utils/catchAsync');
 
 const AppErrorF = require('./../utils/appError');
@@ -5,6 +7,8 @@ const AppErrorF = require('./../utils/appError');
 exports.getAll = (resource: string) => {
 	return catchAsync((async (req: any, res: any, next: any) => {
 		try {
+			// console.log(req.st);
+
 			const snapshot = await req.db.collection(resource).get();
 			const documents: [any?] = [];
 			snapshot.forEach((doc: any) => documents.push(doc.data()));
