@@ -31,6 +31,7 @@ main.use(async (req: any, res, next) => {
 		// tslint:disable-next-line: no-invalid-this
 		const tres = cb.call(this, body);
 		req.db = undefined;
+		req.st = undefined;
 		return tres;
 	};
 	next();
@@ -42,12 +43,14 @@ main.use(cors());
 main.options('*', cors());
 
 const db = admin.firestore();
+const bucket = admin.storage().bucket();
 
 // HELMET
 main.use(helmet());
 main.use((req: any, res, next) => {
 	req.requestTime = new Date().toISOString();
 	req.db = db;
+	req.st = bucket;
 	next();
 });
 
