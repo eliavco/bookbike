@@ -24,6 +24,7 @@
     "@ngx-loading-bar/http": "^4.2.0",
     "@ngx-loading-bar/http-client": "^4.2.0",
     "@ngx-loading-bar/router": "^4.2.0",
+    "bootstrap": "^4.4.1",
     "classlist.js": "1.1.20150312",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
