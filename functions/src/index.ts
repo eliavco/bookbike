@@ -13,6 +13,7 @@ const compression = require('compression');
 const bikeRouter = require('./routes/bikeRoutes');
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
+const setUpModels = require('./models/model');
 
 //initialize firebase inorder to access its services
 const serviceAccount = require('./serviceAccount.json');
@@ -32,6 +33,7 @@ main.use(async (req: any, res, next) => {
 		const tres = cb.call(this, body);
 		req.db = undefined;
 		req.st = undefined;
+		req.dbm = undefined;
 		return tres;
 	};
 	next();
@@ -45,12 +47,15 @@ main.options('*', cors());
 const db = admin.firestore();
 const bucket = admin.storage().bucket();
 
+const dbm = setUpModels();
+
 // HELMET
 main.use(helmet());
 main.use((req: any, res, next) => {
 	req.requestTime = new Date().toISOString();
 	req.db = db;
 	req.st = bucket;
+	req.dbm = dbm
 	next();
 });
 

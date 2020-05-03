@@ -52,13 +52,14 @@ const sendErrorElse = (req: any, res: any) => {
 	});
 };
 
-module.exports = (err: any, req: any, res: any) => {
+module.exports = (err: any, req: any, res: any, next: any) => {
+	console.log(process.env);
 	err.statusCode = err.statusCode || 500;
 	err.status = err.status || 'error';
 
-	if (process.env.NODE_ENV === 'development') {
+	if (process.env.FUNCTIONS_EMULATOR) {
 		sendErrorDev(err, req, res);
-	} else if (process.env.NODE_ENV === 'production') {
+	} else {
 		let error = { ...err };
 		error.message = err.message;
 		if (error.name === 'CastError') error = handleCastErrorDB(error);
@@ -69,9 +70,7 @@ module.exports = (err: any, req: any, res: any) => {
 			error = handleTokenValidationError();
 		if (error.name === 'TokenExpiredError')
 			error = handleTokenExpirationError();
-
+	
 		sendErrorProd(error, req, res);
-	} else {
-		sendErrorElse(req, res);
 	}
 };
