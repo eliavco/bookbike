@@ -107,7 +107,9 @@ exports.update = (resource: string) => {
 		const id = req.params.id;
 		const document = await req.dbm[resource].getById(id);
 		if (!document) return next(new AppErrorF(`Could not find document with id: ${id}`));
-		document._data = req.body;
+		Object.keys(req.body).forEach((entry: any) => { 
+			document[entry] = req.body[entry];
+		});
 		await document.save();
 		res.status(200).json({
 			status: 'success',
@@ -127,10 +129,20 @@ exports.delete = (resource: string) => {
 	}));
 };
 
-// exports.getAll = (resource: string) => {;;
-// 	return catchAsync((async (req: any, res: any, next: any) => {
-// 			const id = uniqid();
-// 			await req.st.upload(__dirname + './../dev-data/bloob.txt', { destination: `users/${id}` });
-// 			const data = await req.st.file(`users/${id}`).download();
-// 	}));
-// };
+exports.getDownloadableLink = (resource: string) => {
+	return catchAsync((async (req: any, res: any, next: any) => {
+		const id = req.params.id;
+		const document = await req.dbm[resource].getById(id);
+		if (!document) return next(new AppErrorF(`Could not find document with id: ${id}`));
+		const image = document.image;
+		const url = (await req.st.file(`bikes/${image}.jpg`).getSignedUrl({
+			action: 'read',
+			expires: (new Date().getTime()) + 5 * 24 * 60 * 60 * 1000,
+			virtualHostedStyle: true,
+		}))[0];
+		res.status(200).json({
+			status: 'success',
+			url
+		});
+	}));
+};

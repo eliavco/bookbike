@@ -1,17 +1,30 @@
 const { Model, schema, field, ValidationError } = require('firestore-schema-validator');
+const colors = require('color-name');
 
+const colorNames: string[] = Object.keys(colors);
 const uniqueFields: [string?] = [];
 
 const bikeSchema = schema({
-	firstName: field('First Name')
+	title: field('Title')
 		.string()
 		.trim(),
-	lastName: field('Last Name')
+	manufacturer: field('Manufacturer')
 		.string()
-		.trim(),
-	email: field('Email Address')
+		.trim()
+		.optional(),
+	size: field('Size')
+		.oneOf(['small', 'medium', 'large']),
+	price: field('Price')
+		.number(),
+	color: field('Color')
+		.trim()
+		.oneOf(colorNames)
+		.optional(),
+	stock: field('Stock')
+		.number(),
+	image: field('Image')
 		.string()
-		.email(),
+		.trim()
 });
 
 class BikeModel extends Model {
@@ -25,8 +38,8 @@ class BikeModel extends Model {
 		return bikeSchema;
 	}
 
-	get fullName() {
-		return `${this._data.firstName} ${this._data.lastName}`;
+	get name() {
+		return `${this._data.title} by ${this._data.manufacturer}`;
 	}
 
 	toJSON() {
@@ -34,8 +47,13 @@ class BikeModel extends Model {
 			id: this._id, // ID of Document stored in Cloud Firestore
 			createdAt: this._createdAt, // ISO String format date of Document's creation.
 			updatedAt: this._updatedAt, // ISO String format date of Document's last update.
-			fullName: this.fullName,
-			email: this.email,
+			name: this.name,
+			price: this.price,
+			stock: this.stock,
+			title: this.title,
+			manufacturer: this.manufacturer,
+			image: this.image,
+			color: this.color
 		};
 	}
 }
@@ -50,7 +68,7 @@ uniqueFields.forEach(uniqueField => {
 	BikeModel.prehook(uniqueField, async (data: any, bike: BikeModel) => {
 		const result = await checkExists(uniqueField!, data[uniqueField!]);
 		if (result) throw new ValidationError(`A doucment with that ${uniqueField}: ${data[uniqueField!]} already exists`);
-	})
+	});
 });
 
 exports.Bike = BikeModel;
