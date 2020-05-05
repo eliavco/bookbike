@@ -15,7 +15,11 @@ router
 router
 	.route('/:id')
 	.get(bikeController.getBike)
-	.put(bikeController.updateBike)
+	.patch(bikeController.updateBike)
 	.delete(bikeController.deleteBike);
+
+router
+	.route('/image/:id')
+	.get(bikeController.getDownloadableLink);
 
 module.exports = router;

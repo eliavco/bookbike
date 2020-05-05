@@ -53,7 +53,6 @@ const sendErrorElse = (req: any, res: any) => {
 };
 
 module.exports = (err: any, req: any, res: any, next: any) => {
-	console.log(process.env);
 	err.statusCode = err.statusCode || 500;
 	err.status = err.status || 'error';
 

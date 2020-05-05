@@ -23,7 +23,6 @@ export class ExampleComponent implements OnInit {
 		this.titleService.setTitle(this.titleService.getTitle() + ' | Exmaple');
 		this.exampleService.getInfo().subscribe((info: any) => {
 			this.info = info.status;
-			console.log(info);
 		});
 	}
 

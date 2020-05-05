@@ -5,6 +5,7 @@ import * as express from 'express';
 
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const morgan = require('morgan');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const hpp = require('hpp');
@@ -25,6 +26,8 @@ admin.initializeApp(adminConfig);
 //initialize express server
 const app = express();
 const main = express();
+
+if (process.env.FUNCTIONS_EMULATOR) app.use(morgan('dev'));
 
 main.use(async (req: any, res, next) => {
 	const cb = res.send;
@@ -84,15 +87,15 @@ main.use(
 );
 main.use(compression());
 
-//add the path to receive request and set json as bodyParser to process the body 
-const apiVersion = 1;
-main.use(`/api/v${apiVersion}`, app);
+main.use(express.urlencoded({ extended: true }));
 main.use(express.json({
-	limit: '100kb'
+	limit: '120kb'
 }));
-main.use(express.urlencoded({ extended: false, limit: '100kb' }));
 main.use(cookieParser());
 
+//add the path to receive request and set json as bodyParser to process the body
+const apiVersion = 1;
+main.use(`/api/v${apiVersion}`, app);
 
 app.get('/try', async (req, res) => {
 	res.status(200).json({ status: 'OK' });
