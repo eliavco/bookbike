@@ -24,7 +24,10 @@ const bikeSchema = schema({
 		.number(),
 	image: field('Image')
 		.string()
-		.trim()
+		.trim(),
+	liscence: field('Liscence')
+		.default(false)
+		.boolean()
 });
 
 class BikeModel extends Model {
@@ -53,7 +56,8 @@ class BikeModel extends Model {
 			title: this.title,
 			manufacturer: this.manufacturer,
 			image: this.image,
-			color: this.color
+			color: this.color,
+			liscence:  this.liscence
 		};
 	}
 }
