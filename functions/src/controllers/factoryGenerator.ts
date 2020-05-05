@@ -119,6 +119,23 @@ exports.update = (resource: string) => {
 	}));
 };
 
+exports.updateStock = (resource: string) => {
+	return catchAsync((async (req: any, res: any, next: any) => {
+		const id = req.params.id;
+		const document = await req.dbm[resource].getById(id);
+		if (!document) return next(new AppErrorF(`Could not find document with id: ${id}`));
+		let number = -1;
+		if (req.query.delta) number = req.query.delta * 1;
+		document.stock += number;
+		await document.save();
+		res.status(200).json({
+			status: 'success',
+			resource,
+			data: document.toJSON()
+		});
+	}));
+};
+
 exports.delete = (resource: string) => {
 	return catchAsync((async (req: any, res: any, next: any) => {
 		const id = req.params.id;

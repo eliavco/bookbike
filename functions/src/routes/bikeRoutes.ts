@@ -15,6 +15,7 @@ router
 router
 	.route('/:id')
 	.get(bikeController.getBike)
+	.put(bikeController.updateBikeStock)
 	.patch(bikeController.updateBike)
 	.delete(bikeController.deleteBike);
 

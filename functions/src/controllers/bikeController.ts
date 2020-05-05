@@ -44,6 +44,8 @@ exports.createBike = factory.create('bikes');
 
 exports.updateBike = factory.update('bikes');
 
+exports.updateBikeStock = factory.updateStock('bikes');
+
 exports.deleteBike = factory.delete('bikes');
 
 exports.makeQueries = factory.makeQueries({});
