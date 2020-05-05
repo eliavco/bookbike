@@ -2,7 +2,7 @@ const { Model, schema, field, ValidationError } = require('firestore-schema-vali
 const colors = require('color-name');
 
 const colorNames: string[] = Object.keys(colors);
-const uniqueFields: [string?] = [];
+const uniqueFields: string[] = ['title', 'image'];
 
 const bikeSchema = schema({
 	title: field('Title')
@@ -66,8 +66,8 @@ const checkExists = async (fieldType: string, value: any): Promise<boolean> => {
 
 uniqueFields.forEach(uniqueField => {
 	BikeModel.prehook(uniqueField, async (data: any, bike: BikeModel) => {
-		const result = await checkExists(uniqueField!, data[uniqueField!]);
-		if (result) throw new ValidationError(`A doucment with that ${uniqueField}: ${data[uniqueField!]} already exists`);
+		const result = await checkExists(uniqueField, data[uniqueField]);
+		if (result) throw new ValidationError(`A doucment with that ${uniqueField}: ${data[uniqueField]} already exists`);
 	});
 });
 
