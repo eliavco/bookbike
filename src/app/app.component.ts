@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 
 // tslint:disable-next-line: ban-types
@@ -10,7 +10,7 @@ declare let mgaids: Array<string>;
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
 	title = 'bookbike';
 
 	constructor(public router: Router) {
@@ -25,6 +25,10 @@ export class AppComponent {
 				});
 			}
 		});
+	}
+
+	ngOnInit(): void {
+		(window as any).bkBaseTitle = 'Bookbike';
 	}
 
 }

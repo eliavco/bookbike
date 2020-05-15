@@ -22,7 +22,7 @@ export class ExampleComponent implements OnInit {
 		private exampleService: ExampleService) { }
 
 	ngOnInit() {
-		this.titleService.setTitle(this.titleService.getTitle() + ' | Exmaple');
+		this.titleService.setTitle(`${(window as any).bkBaseTitle} | Example`);
 		this.exampleService.getInfo().subscribe((info: any) => {
 			this.info = info.status;
 		});
