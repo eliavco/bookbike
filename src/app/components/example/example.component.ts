@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+
 import { GoogleAnalyticsEventsService } from './../../services/GoogleAnalyticsEvents/GoogleAnalyticsEvents.service';
 import { ExampleService } from './../../services/example/example.service';
 
@@ -11,7 +13,7 @@ import { ExampleService } from './../../services/example/example.service';
 	styleUrls: ['./example.component.scss']
 })
 export class ExampleComponent implements OnInit {
-
+	faCoffee = faCoffee;
 	info;
 
 	constructor(

@@ -66,7 +66,9 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "bookbike:build"
+			"browserTarget": "bookbike:build",
+			"sslKey": "./localhost.key",
+			"sslCert": "./localhost.crt"
           },
           "configurations": {
             "production": {
