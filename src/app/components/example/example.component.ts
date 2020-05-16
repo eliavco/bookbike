@@ -6,6 +6,7 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 import { GoogleAnalyticsEventsService } from './../../services/GoogleAnalyticsEvents/GoogleAnalyticsEvents.service';
 import { ExampleService } from './../../services/example/example.service';
+import { AlertsService } from './../../services/alerts/alerts.service';
 
 @Component({
 	selector: 'bk-example',
@@ -19,7 +20,9 @@ export class ExampleComponent implements OnInit {
 	constructor(
 		private googleAnalyticsEventsService: GoogleAnalyticsEventsService,
 		private titleService: Title,
-		private exampleService: ExampleService) { }
+		private exampleService: ExampleService,
+		private alertsService: AlertsService
+	) { }
 
 	ngOnInit() {
 		this.titleService.setTitle(`${(window as any).bkBaseTitle} | Example`);
